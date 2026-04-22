@@ -33,9 +33,10 @@ export const authAPI = {
 
 // ── Settings ──────────────────────────────────────────────────────
 export const settingsAPI = {
-  get:    ()     => api.get('/settings'),
-  update: (data) => api.put('/settings', data),
-  reset:  ()     => api.post('/settings/reset', { confirm: 'RESET' }),
+  get:       ()     => api.get('/settings'),
+  getPublic: ()     => api.get('/settings/public'),
+  update:    (data) => api.put('/settings', data),
+  reset:     ()     => api.post('/settings/reset', { confirm: 'RESET' }),
 };
 
 // ── Jobs ──────────────────────────────────────────────────────────

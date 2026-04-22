@@ -5,7 +5,7 @@ import { toast } from '../../components/Toast'
 const DEPTS = ['Engineering','Consulting','Research','Sales','Operations']
 const CATS  = { Engineering:'engineering', Consulting:'consulting', Research:'research', Sales:'sales', Operations:'operations' }
 const ICONS = { Engineering:'⚙️', Consulting:'🎯', Research:'🧠', Sales:'💼', Operations:'🌟' }
-const EMPTY_FORM = { title:'', dept:'Engineering', location:'Dubai, UAE', type:'Full-Time', salMin:'', salMax:'', badge:'', desc:'', requirements:'' }
+const EMPTY_FORM = { title:'', dept:'Engineering', location:'Dubai, UAE', type:'Full-Time', badge:'', desc:'', requirements:'' }
 
 function JobModal({ job, onClose, onSaved }) {
   const [f, setF] = useState(() => job ? {
@@ -13,8 +13,6 @@ function JobModal({ job, onClose, onSaved }) {
     dept: job.dept || 'Engineering',
     location: job.location || 'Dubai, UAE',
     type: job.type || 'Full-Time',
-    salMin: job.salMin ?? '',
-    salMax: job.salMax ?? '',
     badge: job.badge || '',
     desc: job.desc || '',
     requirements: Array.isArray(job.requirements) ? job.requirements.join('\n') : '',
@@ -26,15 +24,14 @@ function JobModal({ job, onClose, onSaved }) {
 
   const submit = async () => {
     if (!f.title || !f.location) { toast.error('Title and location required'); return }
-    if (f.salMin && f.salMax && Number(f.salMin) > Number(f.salMax)) { toast.error('Salary min cannot exceed salary max'); return }
     setBusy(true)
     try {
       const payload = {
         ...f,
         category: CATS[f.dept] || 'operations',
         icon:     ICONS[f.dept] || '💼',
-        salMin:   parseInt(f.salMin)||0,
-        salMax:   parseInt(f.salMax)||0,
+        salMin:   0,
+        salMax:   0,
         requirements: f.requirements.split('\n').filter(Boolean),
       }
       if (isEditing) {
@@ -78,16 +75,6 @@ function JobModal({ job, onClose, onSaved }) {
               <select className="form-select" value={f.type} onChange={e=>set('type',e.target.value)}>
                 <option>Full-Time</option><option>Part-Time</option><option>Contract</option>
               </select>
-            </div>
-          </div>
-          <div className="form-row">
-            <div className="form-group">
-              <label className="form-label">Salary Min (AED/yr)</label>
-              <input className="form-input" type="number" value={f.salMin} onChange={e=>set('salMin',e.target.value)} placeholder="200000" />
-            </div>
-            <div className="form-group">
-              <label className="form-label">Salary Max (AED/yr)</label>
-              <input className="form-input" type="number" value={f.salMax} onChange={e=>set('salMax',e.target.value)} placeholder="350000" />
             </div>
           </div>
           <div className="form-group">
@@ -176,7 +163,6 @@ export default function JobPostings() {
               </div>
               <div style={{ display:'flex', flexDirection:'column', gap:'0.3rem', fontSize:'0.78rem', color:'var(--muted)', marginBottom:'0.85rem' }}>
                 <span>📍 {j.location}</span>
-                <span>💰 AED {(j.salMin/1000).toFixed(0)}K – {(j.salMax/1000).toFixed(0)}K / yr</span>
                 <span>📋 {j.appCount || 0} application{j.appCount!==1?'s':''}</span>
                 {j.badge && <span><span className={`badge ${badgeClass[j.badge]||''}`}>{j.badge}</span></span>}
               </div>

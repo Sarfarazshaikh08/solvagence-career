@@ -1,0 +1,48 @@
+--- frontend/src/pages/CareersPage.jsx
++++ frontend/src/pages/CareersPage.jsx
+@@ -228,21 +228,31 @@ export default function CareersPage() {
+   }, [filter, q])
+ 
+   useEffect(() => {
+-    settingsAPI.getPublic()
+-      .then(r => {
+-        const d = r.data.data
+-        if (d?.publicContent) {
+-          setPublicContent(prev => ({
+-            ...prev,
+-            ...d.publicContent,
+-            hero: { ...prev.hero, ...(d.publicContent.hero || {}) },
+-            sections: { ...prev.sections, ...(d.publicContent.sections || {}) },
+-            footer: { ...prev.footer, ...(d.publicContent.footer || {}) },
+-            whyJoinUs: Array.isArray(d.publicContent.whyJoinUs) && d.publicContent.whyJoinUs.length ? d.publicContent.whyJoinUs : prev.whyJoinUs,
+-            benefits: Array.isArray(d.publicContent.benefits) && d.publicContent.benefits.length ? d.publicContent.benefits : prev.benefits,
+-            hiringJourney: Array.isArray(d.publicContent.hiringJourney) && d.publicContent.hiringJourney.length ? d.publicContent.hiringJourney : prev.hiringJourney,
+-          }))
++    const fetchSettings = () => {
++      settingsAPI.getPublic()
++        .then(r => {
++          const d = r.data.data
++          if (d?.publicContent) {
++            setPublicContent(prev => ({
++              ...prev,
++              ...d.publicContent,
++              hero: { ...prev.hero, ...(d.publicContent.hero || {}) },
++              sections: { ...prev.sections, ...(d.publicContent.sections || {}) },
++              footer: { ...prev.footer, ...(d.publicContent.footer || {}) },
++              whyJoinUs: Array.isArray(d.publicContent.whyJoinUs) && d.publicContent.whyJoinUs.length ? d.publicContent.whyJoinUs : prev.whyJoinUs,
++              benefits: Array.isArray(d.publicContent.benefits) && d.publicContent.benefits.length ? d.publicContent.benefits : prev.benefits,
++              hiringJourney: Array.isArray(d.publicContent.hiringJourney) && d.publicContent.hiringJourney.length ? d.publicContent.hiringJourney : prev.hiringJourney,
++            }))
++          }
++          if (d?.company) setCompany({ careersEmail: d.company.careersEmail || 'careers@solvagence.com' })
++        })
++        .catch(() => {})
++    }
++    
++    fetchSettings() // Fetch on mount
++    const interval = setInterval(fetchSettings, 30000) // Poll every 30 seconds
++    return () => clearInterval(interval)
+   }, [])
+ 
+ 
+ 

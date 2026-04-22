@@ -39,7 +39,7 @@ router.post('/', upload.single('resume'), [
     // Build resume object depending on storage backend
     let resumeData = {};
     if (req.file) {
-      if (req.file.location) {
+      if (req.file.key) {
         // S3 upload
         resumeData = {
           originalName: req.file.originalname,
