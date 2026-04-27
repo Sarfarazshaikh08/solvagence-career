@@ -28,6 +28,27 @@ const jobValidators = [
   }),
 ];
 
+// Separate validators for updates (all fields optional)
+const jobUpdateValidators = [
+  body('title').optional().trim().notEmpty().withMessage('Title cannot be empty'),
+  body('dept').optional().trim().notEmpty().withMessage('Department cannot be empty'),
+  body('location').optional().trim().notEmpty().withMessage('Location cannot be empty'),
+  body('category').optional().isIn(validCategories).withMessage('Invalid category'),
+  body('type').optional().isIn(validTypes).withMessage('Invalid job type'),
+  body('badge').optional().isIn(validBadges).withMessage('Invalid badge'),
+  body('salMin').optional().isInt({ min: 0 }).withMessage('Salary min must be 0 or more'),
+  body('salMax').optional().isInt({ min: 0 }).withMessage('Salary max must be 0 or more'),
+  body('requirements').optional().isArray().withMessage('Requirements must be an array'),
+  body('active').optional().isBoolean().withMessage('Active must be true or false'),
+  body().custom((body) => {
+    const { salMin, salMax } = body;
+    if (salMin != null && salMax != null && Number(salMin) > Number(salMax)) {
+      throw new Error('Salary min cannot be greater than salary max');
+    }
+    return true;
+  }),
+];
+
 // GET /api/jobs — public: active jobs
 router.get('/', [
   query('category').optional().isIn(['all', ...validCategories]).withMessage('Invalid category'),
@@ -97,7 +118,7 @@ router.post('/', protect, jobValidators, async (req, res) => {
 // PUT /api/jobs/:id — update
 router.put('/:id', protect, [
   param('id').custom(validateObjectId),
-  ...jobValidators,
+  ...jobUpdateValidators,
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) return res.status(400).json({ success: false, errors: errors.array() });
