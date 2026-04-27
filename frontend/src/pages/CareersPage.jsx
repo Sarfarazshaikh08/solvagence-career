@@ -283,7 +283,7 @@ export default function CareersPage() {
         <div className="careers-header-inner" style={s.hInner}>
           <div style={s.logo} onClick={() => { setMenuOpen(false); window.scrollTo({top:0,behavior:'smooth'}) }}>
             <img src="/Solvagence-Logo.png" alt="Solvagence Logo" style={{ height: 36, width: 'auto' }} />
-            <span>Solvagence <span style={{ color:'var(--accent)' }}>Careers</span></span>
+            <span>SOLVAGENCE <span style={{ color:'var(--accent)' }}>CAREERS</span></span>
           </div>
           <nav className="careers-nav" style={{ display:'flex', gap:'0.25rem', marginLeft:'auto' }}>
             {[['#open-roles','Open Roles'],['#why','Why Us'],['#benefits','Benefits'],['#process','Process'],['#signup','Alerts']].map(([h,l]) => (
@@ -539,7 +539,7 @@ export default function CareersPage() {
             <div>
               <div style={{ display:'flex', alignItems:'center', gap:'0.75rem', fontFamily:'Space Grotesk,sans-serif', fontWeight:700, marginBottom:'0.75rem' }}>
                 <img src="/Solvagence-Logo.png" alt="Solvagence Logo" style={{ height: 32, width: 'auto' }} />
-                Solvagence <span style={{ color:'var(--accent)' }}>AI Consulting</span>
+                SOLVAGENCE <span style={{ color:'var(--accent)' }}>CAREERS</span>
               </div>
               <p style={{ fontSize:'0.83rem', color:'var(--muted)', lineHeight:1.75, maxWidth:280 }}>{publicContent.footer.blurb}</p>
               <div style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem', marginTop:'1.25rem', fontFamily:'Space Grotesk,sans-serif', fontSize:'0.7rem', fontWeight:700, letterSpacing:'0.1em', textTransform:'uppercase', color:'var(--muted)', border:'1px solid var(--border-s)', padding:'0.4rem 0.9rem', borderRadius:100 }}>

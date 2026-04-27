@@ -79,7 +79,7 @@ export default function Dashboard() {
     <div>
     <div className="dashboard-head" style={{ marginBottom:'2rem' }}>
         <h2 style={{ fontFamily:'Crimson Text,serif', fontSize:'2rem' }}>Dashboard Overview</h2>
-        <p style={{ color:'var(--muted)', fontSize:'0.85rem', marginTop:'0.25rem' }}>Solvagence AI Consulting · Careers Portal</p>
+        <p style={{ color:'var(--muted)', fontSize:'0.85rem', marginTop:'0.25rem' }}>SOLVAGENCE CAREERS · Portal</p>
       </div>
 
       {/* Stat Cards */}

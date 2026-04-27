@@ -78,7 +78,7 @@ export default function AdminLayout() {
         <div style={s.shead}>
           <div style={s.logo}>
             <img src="/Solvagence-Logo.png" alt="Solvagence Logo" style={{ height: 32, width: 'auto' }} />
-            <span>Solvagence <span style={s.lspan}>Admin</span></span>
+            <span>SOLVAGENCE <span style={s.lspan}>CAREERS</span></span>
           </div>
         </div>
         <nav style={s.nav}>
@@ -132,7 +132,7 @@ export default function AdminLayout() {
             </svg>
           </button>
           <span className="admin-topbar-title" style={{ fontFamily:'Space Grotesk,sans-serif', fontSize:'0.95rem', fontWeight:700, flex:1 }}>
-            Solvagence Careers Admin
+            SOLVAGENCE CAREERS ADMIN
           </span>
           <div className="admin-topbar-actions">
             <a href="/" target="_blank" className="btn-ghost">← Public Site</a>
