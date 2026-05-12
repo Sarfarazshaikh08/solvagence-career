@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const jobSchema = new mongoose.Schema({
   title:       { type: String, required: true, trim: true },
+  titleAr:     { type: String, default: '', trim: true },
   dept:        { type: String, required: true },
   category:    { type: String, enum: ['engineering','consulting','research','sales','operations'], default: 'operations' },
   location:    { type: String, required: true },
@@ -12,14 +13,19 @@ const jobSchema = new mongoose.Schema({
   icon:        { type: String, default: '💼' },
   active:      { type: Boolean, default: true },
   desc:        { type: String, default: '' },
+  descAr:      { type: String, default: '', trim: true },
   requirements:{ type: [String], default: [] },
+  requirementsAr:{ type: [String], default: [] },
 }, { timestamps: true });
 
 jobSchema.index({
   title: 'text',
+  titleAr: 'text',
   dept: 'text',
   desc: 'text',
+  descAr: 'text',
   requirements: 'text',
+  requirementsAr: 'text',
 });
 
 jobSchema.virtual('applicationCount', {

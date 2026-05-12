@@ -5,17 +5,20 @@ import { toast } from '../../components/Toast'
 const DEPTS = ['Engineering','Consulting','Research','Sales','Operations']
 const CATS  = { Engineering:'engineering', Consulting:'consulting', Research:'research', Sales:'sales', Operations:'operations' }
 const ICONS = { Engineering:'⚙️', Consulting:'🎯', Research:'🧠', Sales:'💼', Operations:'🌟' }
-const EMPTY_FORM = { title:'', dept:'Engineering', location:'Dubai, UAE', type:'Full-Time', badge:'', desc:'', requirements:'' }
+const EMPTY_FORM = { title:'', titleAr:'', dept:'Engineering', location:'Dubai, UAE', type:'Full-Time', badge:'', desc:'', descAr:'', requirements:'', requirementsAr:'' }
 
 function JobModal({ job, onClose, onSaved }) {
   const [f, setF] = useState(() => job ? {
     title: job.title || '',
+    titleAr: job.titleAr || '',
     dept: job.dept || 'Engineering',
     location: job.location || 'Dubai, UAE',
     type: job.type || 'Full-Time',
     badge: job.badge || '',
     desc: job.desc || '',
+    descAr: job.descAr || '',
     requirements: Array.isArray(job.requirements) ? job.requirements.join('\n') : '',
+    requirementsAr: Array.isArray(job.requirementsAr) ? job.requirementsAr.join('\n') : '',
   } : EMPTY_FORM)
   const [busy, setBusy] = useState(false)
   const isEditing = !!job
@@ -33,6 +36,7 @@ function JobModal({ job, onClose, onSaved }) {
         salMin:   0,
         salMax:   0,
         requirements: f.requirements.split('\n').filter(Boolean),
+        requirementsAr: f.requirementsAr.split('\n').filter(Boolean),
       }
       if (isEditing) {
         await jobsAPI.update(job._id, payload)
@@ -58,6 +62,12 @@ function JobModal({ job, onClose, onSaved }) {
               <label className="form-label">Job Title <span className="req">*</span></label>
               <input className="form-input" value={f.title} onChange={e=>set('title',e.target.value)} placeholder="e.g. Senior AI Engineer" />
             </div>
+            <div className="form-group">
+              <label className="form-label">Job Title (Arabic)</label>
+              <input className="form-input" value={f.titleAr} onChange={e=>set('titleAr',e.target.value)} placeholder="مثال: مهندس ذكاء اصطناعي أول" />
+            </div>
+          </div>
+          <div className="form-row">
             <div className="form-group">
               <label className="form-label">Department</label>
               <select className="form-select" value={f.dept} onChange={e=>set('dept',e.target.value)}>
@@ -88,9 +98,20 @@ function JobModal({ job, onClose, onSaved }) {
             <textarea className="form-textarea" rows="4" value={f.desc} onChange={e=>set('desc',e.target.value)} placeholder="Describe the role and responsibilities…" />
           </div>
           <div className="form-group">
+            <label className="form-label">Role Description (Arabic)</label>
+            <textarea className="form-textarea" rows="4" value={f.descAr} onChange={e=>set('descAr',e.target.value)} placeholder="اكتب وصف الدور والمسؤوليات…" />
+          </div>
+          <div className="form-group">
             <label className="form-label">Requirements (one per line)</label>
             <textarea className="form-textarea" rows="4" value={f.requirements} onChange={e=>set('requirements',e.target.value)} placeholder="5+ years ML experience&#10;Python, PyTorch&#10;LLM deployment experience" />
           </div>
+          <div className="form-group">
+            <label className="form-label">Requirements (Arabic, one per line)</label>
+            <textarea className="form-textarea" rows="4" value={f.requirementsAr} onChange={e=>set('requirementsAr',e.target.value)} placeholder="5+ سنوات خبرة&#10;Python و PyTorch&#10;خبرة في LLM" />
+          </div>
+          <p style={{ fontSize:'0.75rem', color:'var(--muted)', marginBottom:'1rem' }}>
+            Arabic fields are shown automatically on the public site when visitors switch to Arabic.
+          </p>
           <div style={{ display:'flex', gap:'1rem' }}>
             <button className="btn-primary" style={{ flex:1, justifyContent:'center' }} onClick={submit} disabled={busy}>
               {busy ? <><span className="spinner"/> {isEditing ? 'Saving…' : 'Posting…'}</> : isEditing ? 'Save Changes' : 'Post Role'}

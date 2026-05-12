@@ -73,6 +73,7 @@ const settingSchema = new mongoose.Schema({
       locationBadge: { type: String, default: 'DIFC, Dubai, UAE' },
     },
   },
+  publicContentAr: { type: mongoose.Schema.Types.Mixed, default: {} },
   updatedBy: { type: String, default: '' },
 }, { timestamps: true });
 

@@ -68,6 +68,53 @@ const DEFAULT_SETTINGS = {
       locationBadge: 'DIFC, Dubai, UAE',
     },
   },
+  publicContentAr: {
+    hero: {
+      badgeText: 'نحن نوظف الآن · مركز دبي المالي العالمي والعمل عن بُعد',
+      titleLine1: 'ابنِ مستقبل',
+      titleLine2: 'الذكاء الاصطناعي',
+      titleLine3: 'من قلب الخليج',
+      subtitle: 'سولفاجنس لاستشارات الذكاء الاصطناعي من أبرز شركات التحول المؤسسي في المنطقة، ومقرها دبي وتعمل عبر أكثر من 12 دولة.',
+      ctaPrimary: 'استعرض الوظائف المفتوحة',
+      ctaSecondary: 'احصل على تنبيهات الوظائف',
+      stats: [
+        { value: '35+', label: 'وظائف مفتوحة' },
+        { value: '12+', label: 'دول نعمل فيها' },
+        { value: '92%', label: 'رضا الفريق' },
+        { value: '4×', label: 'نمو سنوي' },
+      ],
+    },
+    sections: {
+      openRolesTitle: 'اعثر على دورك',
+      openRolesDesc: 'من هندسة الذكاء الاصطناعي المتقدمة إلى الاستشارات التنفيذية، أعمال مميزة لأشخاص مميزين.',
+      whyTitle: 'حيث يلتقي التميز بالهدف',
+      benefitsTitle: 'مزايا تكافئ التميز',
+      processTitle: 'عملية واضحة وسريعة ومحترمة',
+      signupTitle: 'احصل على وصول مبكر للوظائف الجديدة',
+    },
+    whyJoinUs: [
+      ['🌍','أثر عالمي ومكانة مرموقة','اعمل من قلب دبي وساهم في تشكيل تبني الذكاء الاصطناعي عبر المنطقة وخارجها.'],
+      ['💸','رواتب قوية مع دخل معفى من الضريبة','حزم تنافسية ومزايا شاملة مقارنة بأفضل الشركات العالمية.'],
+      ['🚀','نمو سريع وملكية حقيقية','كل عضو في الفريق يملك نطاقاً مؤثراً منذ اليوم الأول.'],
+      ['🤖','عمل على أحدث تقنيات الذكاء الاصطناعي','نماذج لغوية كبيرة وحلول مخصصة لعملاء مؤسسيين كبار.'],
+    ].map(([icon,title,desc]) => ({ icon, title, desc })),
+    benefits: [
+      ['💰','راتب تنافسي ومكافآت','دخل بالدرهم معفى من الضريبة مع مكافآت سنوية وحوافز إضافية.'],
+      ['✈️','تأشيرة وانتقال إلى الإمارات','رعاية كاملة للتأشيرة والسكن المؤقت ودعم الانضمام.'],
+      ['🏥','تأمين صحي ممتاز','تغطية صحية شاملة لك وللمعالين.'],
+      ['📚','ميزانية تعلم وتطوير','تمويل للشهادات والفعاليات والدورات والكتب.'],
+    ].map(([icon,title,desc]) => ({ icon, title, desc })),
+    hiringJourney: [
+      ['01','قدّم الآن','أرسل طلبك وسيرتك الذاتية خلال دقائق قليلة.'],
+      ['02','مراجعة الفريق','نراجع طلبك عادة خلال 5 أيام عمل.'],
+      ['03','مكالمة أولية','مكالمة قصيرة لفهم خبرتك وأهدافك المهنية.'],
+      ['04','مقابلة المدير','نقاش أعمق مع مديرك المحتمل حول الدور والمواءمة.'],
+    ].map(([num,title,desc]) => ({ num, title, desc })),
+    footer: {
+      blurb: 'تحول مؤسسي بالذكاء الاصطناعي من مقرنا في دبي، نبني مستقبل الذكاء الاصطناعي عبر الخليج والشرق الأوسط والهند والولايات المتحدة.',
+      locationBadge: 'دبي، الإمارات',
+    },
+  },
 };
 
 async function getOrCreateSettings() {
@@ -95,6 +142,7 @@ router.get('/public', async (req, res) => {
       data: {
         company: settings.company,
         publicContent: settings.publicContent || DEFAULT_SETTINGS.publicContent,
+        publicContentAr: settings.publicContentAr || DEFAULT_SETTINGS.publicContentAr,
       },
     });
   } catch (err) {
@@ -111,36 +159,36 @@ router.put('/', protect, [
   body('notifications.dailyDigest').isBoolean(),
   body('notifications.newSubscriberAlert').isBoolean(),
   body('notifications.weeklyAnalytics').isBoolean(),
-  body('publicContent.hero.badgeText').trim().notEmpty(),
-  body('publicContent.hero.titleLine1').trim().notEmpty(),
-  body('publicContent.hero.titleLine2').trim().notEmpty(),
-  body('publicContent.hero.titleLine3').trim().notEmpty(),
-  body('publicContent.hero.subtitle').trim().notEmpty(),
-  body('publicContent.hero.ctaPrimary').trim().notEmpty(),
-  body('publicContent.hero.ctaSecondary').trim().notEmpty(),
-  body('publicContent.hero.stats').isArray({ min: 4, max: 4 }),
-  body('publicContent.hero.stats.*.value').trim().notEmpty(),
-  body('publicContent.hero.stats.*.label').trim().notEmpty(),
-  body('publicContent.sections.openRolesTitle').trim().notEmpty(),
-  body('publicContent.sections.openRolesDesc').trim().notEmpty(),
-  body('publicContent.sections.whyTitle').trim().notEmpty(),
-  body('publicContent.sections.benefitsTitle').trim().notEmpty(),
-  body('publicContent.sections.processTitle').trim().notEmpty(),
-  body('publicContent.sections.signupTitle').trim().notEmpty(),
-  body('publicContent.whyJoinUs').isArray({ min: 1 }),
-  body('publicContent.whyJoinUs.*.icon').trim().notEmpty(),
-  body('publicContent.whyJoinUs.*.title').trim().notEmpty(),
-  body('publicContent.whyJoinUs.*.desc').trim().notEmpty(),
-  body('publicContent.benefits').isArray({ min: 1 }),
-  body('publicContent.benefits.*.icon').trim().notEmpty(),
-  body('publicContent.benefits.*.title').trim().notEmpty(),
-  body('publicContent.benefits.*.desc').trim().notEmpty(),
-  body('publicContent.hiringJourney').isArray({ min: 1 }),
-  body('publicContent.hiringJourney.*.num').trim().notEmpty(),
-  body('publicContent.hiringJourney.*.title').trim().notEmpty(),
-  body('publicContent.hiringJourney.*.desc').trim().notEmpty(),
-  body('publicContent.footer.blurb').trim().notEmpty(),
-  body('publicContent.footer.locationBadge').trim().notEmpty(),
+  body('publicContent.hero.badgeText').optional().trim().notEmpty(),
+  body('publicContent.hero.titleLine1').optional().trim().notEmpty(),
+  body('publicContent.hero.titleLine2').optional().trim().notEmpty(),
+  body('publicContent.hero.titleLine3').optional().trim().notEmpty(),
+  body('publicContent.hero.subtitle').optional().trim().notEmpty(),
+  body('publicContent.hero.ctaPrimary').optional().trim().notEmpty(),
+  body('publicContent.hero.ctaSecondary').optional().trim().notEmpty(),
+  body('publicContent.hero.stats').optional().isArray({ min: 4, max: 4 }),
+  body('publicContent.hero.stats.*.value').optional().trim().notEmpty(),
+  body('publicContent.hero.stats.*.label').optional().trim().notEmpty(),
+  body('publicContent.sections.openRolesTitle').optional().trim().notEmpty(),
+  body('publicContent.sections.openRolesDesc').optional().trim().notEmpty(),
+  body('publicContent.sections.whyTitle').optional().trim().notEmpty(),
+  body('publicContent.sections.benefitsTitle').optional().trim().notEmpty(),
+  body('publicContent.sections.processTitle').optional().trim().notEmpty(),
+  body('publicContent.sections.signupTitle').optional().trim().notEmpty(),
+  body('publicContent.whyJoinUs').optional().isArray({ min: 1 }),
+  body('publicContent.whyJoinUs.*.icon').optional().trim().notEmpty(),
+  body('publicContent.whyJoinUs.*.title').optional().trim().notEmpty(),
+  body('publicContent.whyJoinUs.*.desc').optional().trim().notEmpty(),
+  body('publicContent.benefits').optional().isArray({ min: 1 }),
+  body('publicContent.benefits.*.icon').optional().trim().notEmpty(),
+  body('publicContent.benefits.*.title').optional().trim().notEmpty(),
+  body('publicContent.benefits.*.desc').optional().trim().notEmpty(),
+  body('publicContent.hiringJourney').optional().isArray({ min: 1 }),
+  body('publicContent.hiringJourney.*.num').optional().trim().notEmpty(),
+  body('publicContent.hiringJourney.*.title').optional().trim().notEmpty(),
+  body('publicContent.hiringJourney.*.desc').optional().trim().notEmpty(),
+  body('publicContent.footer.blurb').optional().trim().notEmpty(),
+  body('publicContent.footer.locationBadge').optional().trim().notEmpty(),
 ], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -148,16 +196,13 @@ router.put('/', protect, [
   }
 
   try {
-    const settings = await Setting.findOneAndUpdate(
-      { key: 'global' },
-      {
-        company: req.body.company,
-        notifications: req.body.notifications,
-        publicContent: req.body.publicContent,
-        updatedBy: req.admin.username,
-      },
-      { new: true, upsert: true, runValidators: true, setDefaultsOnInsert: true }
-    );
+    const settings = await getOrCreateSettings();
+    settings.company = req.body.company || settings.company;
+    settings.notifications = req.body.notifications || settings.notifications;
+    settings.publicContent = req.body.publicContent || settings.publicContent;
+    settings.publicContentAr = req.body.publicContentAr || settings.publicContentAr || DEFAULT_SETTINGS.publicContentAr;
+    settings.updatedBy = req.admin.username;
+    await settings.save();
 
     res.json({ success: true, data: settings, message: 'Settings updated' });
   } catch (err) {

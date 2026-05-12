@@ -15,17 +15,12 @@ const appRoutes   = require('./routes/applications');
 const subRoutes   = require('./routes/subscribers');
 const settingRoutes = require('./routes/settings');
 
-const app = express();
-app.locals.dbConnected = false;
+// ── Connect DB (non-blocking) ─────────────────────────────────────
+connectDB().catch(err => {
+  console.error('⚠️  MongoDB will not be available, but server will start');
+});
 
-const allowedOrigins = (
-  process.env.CLIENT_ORIGINS ||
-  process.env.CLIENT_ORIGIN ||
-  'http://localhost:5173'
-)
-  .split(',')
-  .map((o) => o.trim())
-  .filter(Boolean);
+const app = express();
 
 // ── Security & Middleware ─────────────────────────────────────────
 app.use(helmet({
@@ -33,11 +28,22 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin(origin, cb) {
-    // Allow non-browser clients (curl/postman/server-to-server)
-    if (!origin) return cb(null, true);
-    if (allowedOrigins.includes(origin)) return cb(null, true);
-    return cb(new Error(`CORS blocked for origin: ${origin}`));
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    const allowedOrigins = [
+      'http://localhost:5173',
+      'http://127.0.0.1:5173',
+      'http://localhost:3000',
+      'http://127.0.0.1:3000'
+    ];
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
 }));
@@ -54,14 +60,6 @@ const apiLimiter = rateLimit({
   message: { success: false, message: 'Too many requests — try again shortly' },
 });
 app.use('/api/', apiLimiter);
-
-const authLoginLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 10,
-  standardHeaders: true,
-  message: { success: false, message: 'Too many login attempts. Try again in 15 minutes.' },
-});
-app.use('/api/auth/login', authLoginLimiter);
 
 // Public applications: stricter limit
 const applyLimiter = rateLimit({
@@ -88,13 +86,7 @@ app.use('/api/settings',     settingRoutes);
 
 // ── Health check ──────────────────────────────────────────────────
 app.get('/api/health', (req, res) => {
-  res.json({
-    success: true,
-    status: app.locals.dbConnected ? 'healthy' : 'degraded',
-    dbConnected: app.locals.dbConnected,
-    env: process.env.NODE_ENV,
-    ts: new Date(),
-  });
+  res.json({ success: true, status: 'healthy', env: process.env.NODE_ENV, ts: new Date() });
 });
 
 // ── Serve React build in production ───────────────────────────────
@@ -120,22 +112,9 @@ app.use((err, req, res, next) => {
 // ── Start ─────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
 if (require.main === module) {
-  (async () => {
-    const dbConnected = await connectDB();
-    app.locals.dbConnected = dbConnected;
-
-    const allowStartWithoutDb = process.env.ALLOW_START_WITHOUT_DB === 'true';
-    if (!dbConnected && !allowStartWithoutDb) {
-      console.error('❌ Backend startup aborted: MongoDB is not connected.');
-      console.error('Set ALLOW_START_WITHOUT_DB=true only if you intentionally want degraded mode.');
-      process.exit(1);
-    }
-
-    app.listen(PORT, () => {
-      const mode = dbConnected ? 'normal' : 'degraded';
-      console.log(`🚀 Solvagence Careers API running on port ${PORT} [${process.env.NODE_ENV}] (${mode})`);
-    });
-  })();
+  app.listen(PORT, () => {
+    console.log(`🚀 Solvagence Careers API running on port ${PORT} [${process.env.NODE_ENV}]`);
+  });
 }
 
 module.exports = app;

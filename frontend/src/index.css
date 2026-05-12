@@ -47,6 +47,28 @@ img  { max-width: 100%; display: block; }
 button { cursor: pointer; border: none; background: none; font-family: inherit; }
 input, textarea, select { font-family: 'Inter', sans-serif; }
 
+.lang-ar,
+.lang-ar input,
+.lang-ar textarea,
+.lang-ar select,
+.lang-ar button {
+  font-family: 'Tahoma', 'Arial', sans-serif;
+}
+
+.lang-ar h1,
+.lang-ar h2,
+.lang-ar h3,
+.lang-ar h4,
+.lang-ar h5,
+.lang-ar .eyebrow,
+.lang-ar .btn-primary,
+.lang-ar .btn-secondary,
+.lang-ar .btn-ghost,
+.lang-ar .form-label,
+.lang-ar .badge {
+  font-family: 'Tahoma', 'Arial', sans-serif;
+}
+
 /* ── Scrollbar ─────────────────────────────────────────────────── */
 ::-webkit-scrollbar       { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--navy-mid); }

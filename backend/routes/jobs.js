@@ -11,6 +11,7 @@ const validTypes = ['Full-Time', 'Part-Time', 'Contract'];
 const validBadges = ['HOT', 'NEW', 'FEATURED', 'REMOTE', ''];
 const jobValidators = [
   body('title').trim().notEmpty().withMessage('Title required'),
+  body('titleAr').optional().trim(),
   body('dept').trim().notEmpty().withMessage('Department required'),
   body('location').trim().notEmpty().withMessage('Location required'),
   body('category').optional().isIn(validCategories).withMessage('Invalid category'),
@@ -18,7 +19,9 @@ const jobValidators = [
   body('badge').optional().isIn(validBadges).withMessage('Invalid badge'),
   body('salMin').optional().isInt({ min: 0 }).withMessage('Salary min must be 0 or more'),
   body('salMax').optional().isInt({ min: 0 }).withMessage('Salary max must be 0 or more'),
+  body('descAr').optional().trim(),
   body('requirements').optional().isArray().withMessage('Requirements must be an array'),
+  body('requirementsAr').optional().isArray().withMessage('Arabic requirements must be an array'),
   body('active').optional().isBoolean().withMessage('Active must be true or false'),
   body().custom(({ salMin, salMax }) => {
     if (salMin != null && salMax != null && Number(salMin) > Number(salMax)) {
@@ -31,6 +34,7 @@ const jobValidators = [
 // Separate validators for updates (all fields optional)
 const jobUpdateValidators = [
   body('title').optional().trim().notEmpty().withMessage('Title cannot be empty'),
+  body('titleAr').optional().trim(),
   body('dept').optional().trim().notEmpty().withMessage('Department cannot be empty'),
   body('location').optional().trim().notEmpty().withMessage('Location cannot be empty'),
   body('category').optional().isIn(validCategories).withMessage('Invalid category'),
@@ -38,7 +42,9 @@ const jobUpdateValidators = [
   body('badge').optional().isIn(validBadges).withMessage('Invalid badge'),
   body('salMin').optional().isInt({ min: 0 }).withMessage('Salary min must be 0 or more'),
   body('salMax').optional().isInt({ min: 0 }).withMessage('Salary max must be 0 or more'),
+  body('descAr').optional().trim(),
   body('requirements').optional().isArray().withMessage('Requirements must be an array'),
+  body('requirementsAr').optional().isArray().withMessage('Arabic requirements must be an array'),
   body('active').optional().isBoolean().withMessage('Active must be true or false'),
   body().custom((body) => {
     const { salMin, salMax } = body;

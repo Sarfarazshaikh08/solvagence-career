@@ -50,6 +50,54 @@ const DEFAULT_PUBLIC_CONTENT = {
   },
 }
 
+const DEFAULT_PUBLIC_CONTENT_AR = {
+  hero: {
+    badgeText: 'نحن نوظف الآن · مركز دبي المالي العالمي والعمل عن بُعد',
+    titleLine1: 'ابنِ مستقبل',
+    titleLine2: 'الذكاء الاصطناعي',
+    titleLine3: 'من قلب الخليج',
+    subtitle: 'سولفاجنس لاستشارات الذكاء الاصطناعي من أبرز شركات التحول المؤسسي في المنطقة، ومقرها دبي وتعمل عبر أكثر من 12 دولة.',
+    ctaPrimary: 'استعرض الوظائف المفتوحة',
+    ctaSecondary: 'احصل على تنبيهات الوظائف',
+    stats: [
+      { value: '35+', label: 'وظائف مفتوحة' },
+      { value: '12+', label: 'دول نعمل فيها' },
+      { value: '92%', label: 'رضا الفريق' },
+      { value: '4×', label: 'نمو سنوي' },
+    ],
+  },
+  sections: {
+    openRolesTitle: 'اعثر على دورك',
+    openRolesDesc: 'من هندسة الذكاء الاصطناعي المتقدمة إلى الاستشارات التنفيذية، أعمال مميزة لأشخاص مميزين.',
+    whyTitle: 'حيث يلتقي التميز بالهدف',
+    benefitsTitle: 'مزايا تكافئ التميز',
+    processTitle: 'عملية واضحة وسريعة ومحترمة',
+    signupTitle: 'احصل على وصول مبكر للوظائف الجديدة',
+  },
+  whyJoinUs: [
+    { icon:'🌍', title:'أثر عالمي ومكانة مرموقة', desc:'اعمل من قلب دبي وساهم في تشكيل تبني الذكاء الاصطناعي عبر المنطقة وخارجها.' },
+    { icon:'💸', title:'رواتب قوية مع دخل معفى من الضريبة', desc:'حزم تنافسية ومزايا شاملة مقارنة بأفضل الشركات العالمية.' },
+    { icon:'🚀', title:'نمو سريع وملكية حقيقية', desc:'كل عضو في الفريق يملك نطاقاً مؤثراً منذ اليوم الأول.' },
+    { icon:'🤖', title:'عمل على أحدث تقنيات الذكاء الاصطناعي', desc:'نماذج لغوية كبيرة وحلول مخصصة لعملاء مؤسسيين كبار.' },
+  ],
+  benefits: [
+    { icon:'💰', title:'راتب تنافسي ومكافآت', desc:'دخل بالدرهم معفى من الضريبة مع مكافآت سنوية وحوافز إضافية.' },
+    { icon:'✈️', title:'تأشيرة وانتقال إلى الإمارات', desc:'رعاية كاملة للتأشيرة والسكن المؤقت ودعم الانضمام.' },
+    { icon:'🏥', title:'تأمين صحي ممتاز', desc:'تغطية صحية شاملة لك وللمعالين.' },
+    { icon:'📚', title:'ميزانية تعلم وتطوير', desc:'تمويل للشهادات والفعاليات والدورات والكتب.' },
+  ],
+  hiringJourney: [
+    { num:'01', title:'قدّم الآن', desc:'أرسل طلبك وسيرتك الذاتية خلال دقائق قليلة.' },
+    { num:'02', title:'مراجعة الفريق', desc:'نراجع طلبك عادة خلال 5 أيام عمل.' },
+    { num:'03', title:'مكالمة أولية', desc:'مكالمة قصيرة لفهم خبرتك وأهدافك المهنية.' },
+    { num:'04', title:'مقابلة المدير', desc:'نقاش أعمق مع مديرك المحتمل حول الدور والمواءمة.' },
+  ],
+  footer: {
+    blurb: 'تحول مؤسسي بالذكاء الاصطناعي من مقرنا في دبي، نبني مستقبل الذكاء الاصطناعي عبر الخليج والشرق الأوسط والهند والولايات المتحدة.',
+    locationBadge: 'دبي، الإمارات',
+  },
+}
+
 const normalizeSettings = (data = {}) => ({
   company: {
     name: data.company?.name || '',
@@ -110,6 +158,53 @@ const normalizeSettings = (data = {}) => ({
       locationBadge: data.publicContent?.footer?.locationBadge || DEFAULT_PUBLIC_CONTENT.footer.locationBadge,
     },
   },
+  publicContentAr: {
+    hero: {
+      badgeText: data.publicContentAr?.hero?.badgeText || DEFAULT_PUBLIC_CONTENT_AR.hero.badgeText,
+      titleLine1: data.publicContentAr?.hero?.titleLine1 || DEFAULT_PUBLIC_CONTENT_AR.hero.titleLine1,
+      titleLine2: data.publicContentAr?.hero?.titleLine2 || DEFAULT_PUBLIC_CONTENT_AR.hero.titleLine2,
+      titleLine3: data.publicContentAr?.hero?.titleLine3 || DEFAULT_PUBLIC_CONTENT_AR.hero.titleLine3,
+      subtitle: data.publicContentAr?.hero?.subtitle || DEFAULT_PUBLIC_CONTENT_AR.hero.subtitle,
+      ctaPrimary: data.publicContentAr?.hero?.ctaPrimary || DEFAULT_PUBLIC_CONTENT_AR.hero.ctaPrimary,
+      ctaSecondary: data.publicContentAr?.hero?.ctaSecondary || DEFAULT_PUBLIC_CONTENT_AR.hero.ctaSecondary,
+      stats: Array.isArray(data.publicContentAr?.hero?.stats) && data.publicContentAr.hero.stats.length === 4
+        ? data.publicContentAr.hero.stats.map((s, i) => ({ value: s?.value || DEFAULT_PUBLIC_CONTENT_AR.hero.stats[i].value, label: s?.label || DEFAULT_PUBLIC_CONTENT_AR.hero.stats[i].label }))
+        : DEFAULT_PUBLIC_CONTENT_AR.hero.stats,
+    },
+    sections: {
+      openRolesTitle: data.publicContentAr?.sections?.openRolesTitle || DEFAULT_PUBLIC_CONTENT_AR.sections.openRolesTitle,
+      openRolesDesc: data.publicContentAr?.sections?.openRolesDesc || DEFAULT_PUBLIC_CONTENT_AR.sections.openRolesDesc,
+      whyTitle: data.publicContentAr?.sections?.whyTitle || DEFAULT_PUBLIC_CONTENT_AR.sections.whyTitle,
+      benefitsTitle: data.publicContentAr?.sections?.benefitsTitle || DEFAULT_PUBLIC_CONTENT_AR.sections.benefitsTitle,
+      processTitle: data.publicContentAr?.sections?.processTitle || DEFAULT_PUBLIC_CONTENT_AR.sections.processTitle,
+      signupTitle: data.publicContentAr?.sections?.signupTitle || DEFAULT_PUBLIC_CONTENT_AR.sections.signupTitle,
+    },
+    whyJoinUs: Array.isArray(data.publicContentAr?.whyJoinUs) && data.publicContentAr.whyJoinUs.length
+      ? data.publicContentAr.whyJoinUs.map((item, i) => ({
+          icon: item?.icon || DEFAULT_PUBLIC_CONTENT_AR.whyJoinUs[i % DEFAULT_PUBLIC_CONTENT_AR.whyJoinUs.length].icon,
+          title: item?.title || DEFAULT_PUBLIC_CONTENT_AR.whyJoinUs[i % DEFAULT_PUBLIC_CONTENT_AR.whyJoinUs.length].title,
+          desc: item?.desc || DEFAULT_PUBLIC_CONTENT_AR.whyJoinUs[i % DEFAULT_PUBLIC_CONTENT_AR.whyJoinUs.length].desc,
+        }))
+      : DEFAULT_PUBLIC_CONTENT_AR.whyJoinUs,
+    benefits: Array.isArray(data.publicContentAr?.benefits) && data.publicContentAr.benefits.length
+      ? data.publicContentAr.benefits.map((item, i) => ({
+          icon: item?.icon || DEFAULT_PUBLIC_CONTENT_AR.benefits[i % DEFAULT_PUBLIC_CONTENT_AR.benefits.length].icon,
+          title: item?.title || DEFAULT_PUBLIC_CONTENT_AR.benefits[i % DEFAULT_PUBLIC_CONTENT_AR.benefits.length].title,
+          desc: item?.desc || DEFAULT_PUBLIC_CONTENT_AR.benefits[i % DEFAULT_PUBLIC_CONTENT_AR.benefits.length].desc,
+        }))
+      : DEFAULT_PUBLIC_CONTENT_AR.benefits,
+    hiringJourney: Array.isArray(data.publicContentAr?.hiringJourney) && data.publicContentAr.hiringJourney.length
+      ? data.publicContentAr.hiringJourney.map((item, i) => ({
+          num: item?.num || DEFAULT_PUBLIC_CONTENT_AR.hiringJourney[i % DEFAULT_PUBLIC_CONTENT_AR.hiringJourney.length].num,
+          title: item?.title || DEFAULT_PUBLIC_CONTENT_AR.hiringJourney[i % DEFAULT_PUBLIC_CONTENT_AR.hiringJourney.length].title,
+          desc: item?.desc || DEFAULT_PUBLIC_CONTENT_AR.hiringJourney[i % DEFAULT_PUBLIC_CONTENT_AR.hiringJourney.length].desc,
+        }))
+      : DEFAULT_PUBLIC_CONTENT_AR.hiringJourney,
+    footer: {
+      blurb: data.publicContentAr?.footer?.blurb || DEFAULT_PUBLIC_CONTENT_AR.footer.blurb,
+      locationBadge: data.publicContentAr?.footer?.locationBadge || DEFAULT_PUBLIC_CONTENT_AR.footer.locationBadge,
+    },
+  },
 })
 
 export default function Settings() {
@@ -118,6 +213,7 @@ export default function Settings() {
   const [saving, setSaving] = useState(false)
   const [resetting, setResetting] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [contentLang, setContentLang] = useState('en')
   const [settings, setSettings] = useState({
     company: {
       name: 'Solvagence AI Consulting Limited',
@@ -132,6 +228,7 @@ export default function Settings() {
       weeklyAnalytics: true,
     },
     publicContent: DEFAULT_PUBLIC_CONTENT,
+    publicContentAr: DEFAULT_PUBLIC_CONTENT_AR,
   })
 
   useEffect(() => {
@@ -164,31 +261,34 @@ export default function Settings() {
     setSettings(prev => ({ ...prev, notifications: { ...prev.notifications, [key]: value } }))
   }
 
+  const contentKey = contentLang === 'ar' ? 'publicContentAr' : 'publicContent'
+  const activePublicContent = settings[contentKey]
+
   const setHero = (key, value) => {
-    setSettings(prev => ({ ...prev, publicContent: { ...prev.publicContent, hero: { ...prev.publicContent.hero, [key]: value } } }))
+    setSettings(prev => ({ ...prev, [contentKey]: { ...prev[contentKey], hero: { ...prev[contentKey].hero, [key]: value } } }))
   }
 
   const setHeroStat = (idx, key, value) => {
     setSettings(prev => {
-      const stats = [...prev.publicContent.hero.stats]
+      const stats = [...prev[contentKey].hero.stats]
       stats[idx] = { ...stats[idx], [key]: value }
-      return { ...prev, publicContent: { ...prev.publicContent, hero: { ...prev.publicContent.hero, stats } } }
+      return { ...prev, [contentKey]: { ...prev[contentKey], hero: { ...prev[contentKey].hero, stats } } }
     })
   }
 
   const setSection = (key, value) => {
-    setSettings(prev => ({ ...prev, publicContent: { ...prev.publicContent, sections: { ...prev.publicContent.sections, [key]: value } } }))
+    setSettings(prev => ({ ...prev, [contentKey]: { ...prev[contentKey], sections: { ...prev[contentKey].sections, [key]: value } } }))
   }
 
   const setFooter = (key, value) => {
-    setSettings(prev => ({ ...prev, publicContent: { ...prev.publicContent, footer: { ...prev.publicContent.footer, [key]: value } } }))
+    setSettings(prev => ({ ...prev, [contentKey]: { ...prev[contentKey], footer: { ...prev[contentKey].footer, [key]: value } } }))
   }
 
   const setListItem = (listKey, idx, key, value) => {
     setSettings(prev => {
-      const list = [...prev.publicContent[listKey]]
+      const list = [...prev[contentKey][listKey]]
       list[idx] = { ...list[idx], [key]: value }
-      return { ...prev, publicContent: { ...prev.publicContent, [listKey]: list } }
+      return { ...prev, [contentKey]: { ...prev[contentKey], [listKey]: list } }
     })
   }
 
@@ -309,27 +409,31 @@ export default function Settings() {
 
         <div style={card}>
           <div style={ctitle}>Public Hero Content</div>
+          <div style={{ display:'flex', gap:'0.75rem', marginBottom:'1rem' }}>
+            <button className={contentLang === 'en' ? 'btn-primary' : 'btn-ghost'} onClick={() => setContentLang('en')} type="button">English</button>
+            <button className={contentLang === 'ar' ? 'btn-primary' : 'btn-ghost'} onClick={() => setContentLang('ar')} type="button">Arabic</button>
+          </div>
           <div className="form-group">
             <label className="form-label">Badge Text</label>
-            <input className="form-input" value={settings.publicContent.hero.badgeText} onChange={e => setHero('badgeText', e.target.value)} />
+            <input className="form-input" value={activePublicContent.hero.badgeText} onChange={e => setHero('badgeText', e.target.value)} />
           </div>
           <div className="form-row">
-            <div className="form-group"><label className="form-label">Title Line 1</label><input className="form-input" value={settings.publicContent.hero.titleLine1} onChange={e => setHero('titleLine1', e.target.value)} /></div>
-            <div className="form-group"><label className="form-label">Title Line 2</label><input className="form-input" value={settings.publicContent.hero.titleLine2} onChange={e => setHero('titleLine2', e.target.value)} /></div>
+            <div className="form-group"><label className="form-label">Title Line 1</label><input className="form-input" value={activePublicContent.hero.titleLine1} onChange={e => setHero('titleLine1', e.target.value)} /></div>
+            <div className="form-group"><label className="form-label">Title Line 2</label><input className="form-input" value={activePublicContent.hero.titleLine2} onChange={e => setHero('titleLine2', e.target.value)} /></div>
           </div>
           <div className="form-group">
             <label className="form-label">Title Line 3</label>
-            <input className="form-input" value={settings.publicContent.hero.titleLine3} onChange={e => setHero('titleLine3', e.target.value)} />
+            <input className="form-input" value={activePublicContent.hero.titleLine3} onChange={e => setHero('titleLine3', e.target.value)} />
           </div>
           <div className="form-group">
             <label className="form-label">Subtitle</label>
-            <textarea className="form-textarea" rows="3" value={settings.publicContent.hero.subtitle} onChange={e => setHero('subtitle', e.target.value)} />
+            <textarea className="form-textarea" rows="3" value={activePublicContent.hero.subtitle} onChange={e => setHero('subtitle', e.target.value)} />
           </div>
           <div className="form-row">
-            <div className="form-group"><label className="form-label">Primary CTA</label><input className="form-input" value={settings.publicContent.hero.ctaPrimary} onChange={e => setHero('ctaPrimary', e.target.value)} /></div>
-            <div className="form-group"><label className="form-label">Secondary CTA</label><input className="form-input" value={settings.publicContent.hero.ctaSecondary} onChange={e => setHero('ctaSecondary', e.target.value)} /></div>
+            <div className="form-group"><label className="form-label">Primary CTA</label><input className="form-input" value={activePublicContent.hero.ctaPrimary} onChange={e => setHero('ctaPrimary', e.target.value)} /></div>
+            <div className="form-group"><label className="form-label">Secondary CTA</label><input className="form-input" value={activePublicContent.hero.ctaSecondary} onChange={e => setHero('ctaSecondary', e.target.value)} /></div>
           </div>
-          {settings.publicContent.hero.stats.map((item, idx) => (
+          {activePublicContent.hero.stats.map((item, idx) => (
             <div key={idx} className="form-row">
               <div className="form-group"><label className="form-label">Stat {idx + 1} Value</label><input className="form-input" value={item.value} onChange={e => setHeroStat(idx, 'value', e.target.value)} /></div>
               <div className="form-group"><label className="form-label">Stat {idx + 1} Label</label><input className="form-input" value={item.label} onChange={e => setHeroStat(idx, 'label', e.target.value)} /></div>
@@ -341,26 +445,26 @@ export default function Settings() {
         </div>
 
         <div style={card}>
-          <div style={ctitle}>Public Page Preview</div>
+          <div style={ctitle}>Public Page Preview ({contentLang === 'en' ? 'English' : 'Arabic'})</div>
           <div style={{ background:'var(--navy-mid)', border:'1px solid var(--border-s)', borderRadius:'var(--r)', padding:'1.25rem' }}>
             <div style={{ display:'inline-flex', alignItems:'center', gap:'0.5rem', border:'1px solid var(--border)', borderRadius:100, padding:'0.35rem 0.75rem', fontSize:'0.68rem', color:'var(--accent-pale)', marginBottom:'0.9rem' }}>
               <span style={{ width:6, height:6, borderRadius:'50%', background:'var(--accent)', display:'inline-block' }} />
-              {settings.publicContent.hero.badgeText}
+              {activePublicContent.hero.badgeText}
             </div>
             <h3 style={{ fontFamily:'Crimson Text,serif', fontSize:'1.7rem', lineHeight:1.15, marginBottom:'0.6rem' }}>
-              {settings.publicContent.hero.titleLine1}<br />
-              {settings.publicContent.hero.titleLine2}<br />
-              {settings.publicContent.hero.titleLine3}
+              {activePublicContent.hero.titleLine1}<br />
+              {activePublicContent.hero.titleLine2}<br />
+              {activePublicContent.hero.titleLine3}
             </h3>
             <p style={{ fontSize:'0.82rem', color:'var(--muted)', lineHeight:1.65, marginBottom:'1rem' }}>
-              {settings.publicContent.hero.subtitle}
+              {activePublicContent.hero.subtitle}
             </p>
             <div style={{ display:'flex', gap:'0.6rem', flexWrap:'wrap', marginBottom:'1rem' }}>
-              <span className="btn-primary" style={{ pointerEvents:'none' }}>🔍 {settings.publicContent.hero.ctaPrimary}</span>
-              <span className="btn-secondary" style={{ pointerEvents:'none' }}>{settings.publicContent.hero.ctaSecondary}</span>
+              <span className="btn-primary" style={{ pointerEvents:'none' }}>🔍 {activePublicContent.hero.ctaPrimary}</span>
+              <span className="btn-secondary" style={{ pointerEvents:'none' }}>{activePublicContent.hero.ctaSecondary}</span>
             </div>
             <div style={{ display:'grid', gridTemplateColumns:'repeat(2,minmax(0,1fr))', gap:'0.75rem' }}>
-              {settings.publicContent.hero.stats.map((item, idx) => (
+              {activePublicContent.hero.stats.map((item, idx) => (
                 <div key={`${item.label}-${idx}`} style={{ border:'1px solid var(--border-s)', borderRadius:'var(--r)', padding:'0.75rem' }}>
                   <div style={{ fontFamily:'Crimson Text,serif', fontSize:'1.4rem', fontWeight:700, lineHeight:1 }}>{item.value}</div>
                   <div style={{ fontSize:'0.74rem', color:'var(--muted)', marginTop:'0.25rem' }}>{item.label}</div>
@@ -375,18 +479,18 @@ export default function Settings() {
 
         <div style={card}>
           <div style={ctitle}>Public Section Titles & Footer</div>
-          <div className="form-group"><label className="form-label">Open Roles Title</label><input className="form-input" value={settings.publicContent.sections.openRolesTitle} onChange={e => setSection('openRolesTitle', e.target.value)} /></div>
-          <div className="form-group"><label className="form-label">Open Roles Description</label><textarea className="form-textarea" rows="2" value={settings.publicContent.sections.openRolesDesc} onChange={e => setSection('openRolesDesc', e.target.value)} /></div>
+          <div className="form-group"><label className="form-label">Open Roles Title</label><input className="form-input" value={activePublicContent.sections.openRolesTitle} onChange={e => setSection('openRolesTitle', e.target.value)} /></div>
+          <div className="form-group"><label className="form-label">Open Roles Description</label><textarea className="form-textarea" rows="2" value={activePublicContent.sections.openRolesDesc} onChange={e => setSection('openRolesDesc', e.target.value)} /></div>
           <div className="form-row">
-            <div className="form-group"><label className="form-label">Why Us Title</label><input className="form-input" value={settings.publicContent.sections.whyTitle} onChange={e => setSection('whyTitle', e.target.value)} /></div>
-            <div className="form-group"><label className="form-label">Benefits Title</label><input className="form-input" value={settings.publicContent.sections.benefitsTitle} onChange={e => setSection('benefitsTitle', e.target.value)} /></div>
+            <div className="form-group"><label className="form-label">Why Us Title</label><input className="form-input" value={activePublicContent.sections.whyTitle} onChange={e => setSection('whyTitle', e.target.value)} /></div>
+            <div className="form-group"><label className="form-label">Benefits Title</label><input className="form-input" value={activePublicContent.sections.benefitsTitle} onChange={e => setSection('benefitsTitle', e.target.value)} /></div>
           </div>
           <div className="form-row">
-            <div className="form-group"><label className="form-label">Process Title</label><input className="form-input" value={settings.publicContent.sections.processTitle} onChange={e => setSection('processTitle', e.target.value)} /></div>
-            <div className="form-group"><label className="form-label">Signup Title</label><input className="form-input" value={settings.publicContent.sections.signupTitle} onChange={e => setSection('signupTitle', e.target.value)} /></div>
+            <div className="form-group"><label className="form-label">Process Title</label><input className="form-input" value={activePublicContent.sections.processTitle} onChange={e => setSection('processTitle', e.target.value)} /></div>
+            <div className="form-group"><label className="form-label">Signup Title</label><input className="form-input" value={activePublicContent.sections.signupTitle} onChange={e => setSection('signupTitle', e.target.value)} /></div>
           </div>
-          <div className="form-group"><label className="form-label">Footer Blurb</label><textarea className="form-textarea" rows="3" value={settings.publicContent.footer.blurb} onChange={e => setFooter('blurb', e.target.value)} /></div>
-          <div className="form-group"><label className="form-label">Footer Location Badge</label><input className="form-input" value={settings.publicContent.footer.locationBadge} onChange={e => setFooter('locationBadge', e.target.value)} /></div>
+          <div className="form-group"><label className="form-label">Footer Blurb</label><textarea className="form-textarea" rows="3" value={activePublicContent.footer.blurb} onChange={e => setFooter('blurb', e.target.value)} /></div>
+          <div className="form-group"><label className="form-label">Footer Location Badge</label><input className="form-input" value={activePublicContent.footer.locationBadge} onChange={e => setFooter('locationBadge', e.target.value)} /></div>
           <button className="btn-primary" onClick={saveSettings} disabled={saving}>
             {saving ? <><span className="spinner"/> Saving…</> : 'Save Public Content'}
           </button>
@@ -395,7 +499,7 @@ export default function Settings() {
         <div style={card}>
           <div style={ctitle}>Public Blocks: Why, Benefits, Journey</div>
           <div className="form-group"><label className="form-label">Why Join Us Cards</label></div>
-          {settings.publicContent.whyJoinUs.map((item, idx) => (
+          {activePublicContent.whyJoinUs.map((item, idx) => (
             <div key={`why-${idx}`} style={{ border:'1px solid var(--border-s)', borderRadius:'var(--r)', padding:'0.9rem', marginBottom:'0.75rem' }}>
               <div className="form-row">
                 <div className="form-group"><label className="form-label">Icon</label><input className="form-input" value={item.icon} onChange={e => setListItem('whyJoinUs', idx, 'icon', e.target.value)} /></div>
@@ -406,7 +510,7 @@ export default function Settings() {
           ))}
 
           <div className="form-group"><label className="form-label">Compensation & Benefits Cards</label></div>
-          {settings.publicContent.benefits.map((item, idx) => (
+          {activePublicContent.benefits.map((item, idx) => (
             <div key={`benefit-${idx}`} style={{ border:'1px solid var(--border-s)', borderRadius:'var(--r)', padding:'0.9rem', marginBottom:'0.75rem' }}>
               <div className="form-row">
                 <div className="form-group"><label className="form-label">Icon</label><input className="form-input" value={item.icon} onChange={e => setListItem('benefits', idx, 'icon', e.target.value)} /></div>
@@ -417,7 +521,7 @@ export default function Settings() {
           ))}
 
           <div className="form-group"><label className="form-label">Our Hiring Journey Steps</label></div>
-          {settings.publicContent.hiringJourney.map((item, idx) => (
+          {activePublicContent.hiringJourney.map((item, idx) => (
             <div key={`journey-${idx}`} style={{ border:'1px solid var(--border-s)', borderRadius:'var(--r)', padding:'0.9rem', marginBottom:'0.75rem' }}>
               <div className="form-row">
                 <div className="form-group"><label className="form-label">Step No.</label><input className="form-input" value={item.num} onChange={e => setListItem('hiringJourney', idx, 'num', e.target.value)} /></div>
